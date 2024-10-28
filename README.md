@@ -1,4 +1,6 @@
 0. StringTest 실행
+1. LoginTest를 위한 initial 기본 반영
+2. 
 
 
 
