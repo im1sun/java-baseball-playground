@@ -24,6 +24,7 @@ public class LoginTest {
     @Autowired
     private Member TEST_MEMBER;
 
+
     @DisplayName("로그인 성공")
     @Test
     void login_success() throws Exception {
