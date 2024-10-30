@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.util.Base64Utils;
 
 import javax.servlet.http.HttpSession;
 
@@ -35,7 +36,6 @@ public class LoginTest {
     @DisplayName("로그인 성공")
     @Test
     void login_success() throws Exception {
-        System.out.println("LoginTest.login_success1111111111");
         memberRepository.save(TEST_MEMBER);
         ResultActions loginResponse = mockMvc.perform(
                 post("/login")
@@ -43,18 +43,56 @@ public class LoginTest {
                         .param("password", TEST_MEMBER.getPassword())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
         );
-        System.out.println("loginResponse = " + loginResponse);
-        System.out.println("loginResponse = " + loginResponse.andExpect(status().isOk()));
         loginResponse.andExpect(status().isOk());
-        System.out.println("loginResponse = " + loginResponse.andReturn().getRequest().getSession());
         HttpSession session = loginResponse.andReturn().getRequest().getSession();
         assertThat(session).isNotNull();
-        System.out.println("session.getAttribute(\"SPRING_SECURITY_CONTEXT\") = " + session.getAttribute("SPRING_SECURITY_CONTEXT"));
         assertThat(session.getAttribute("SPRING_SECURITY_CONTEXT")).isEqualTo(TEST_MEMBER);
     }
-//    @DisplayName("로그인 실패 - 사용자 없음")
-//// ...
-//    @DisplayName("로그인 실패 - 비밀번호 불일치")
-//// ...
+
+    @DisplayName("로그인 실패 - 사용자 없음")
+    @Test
+    void username_fail() throws Exception {
+        memberRepository.save(TEST_MEMBER);
+        ResultActions loginResponse = mockMvc.perform(
+                post("/login")
+                        .param("username", "emuceeee")
+                        .param("password", "test1234")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+        );
+        loginResponse.andExpect(status().isOk());
+        HttpSession session = loginResponse.andReturn().getRequest().getSession();
+        assertThat(session).isNotNull();
+        assertThat(session.getAttribute("SPRING_SECURITY_CONTEXT")).isNull();
+    }
+
+    @DisplayName("로그인 실패 - 비밀번호 불일치")
+    @Test
+    void password_fail() throws Exception {
+        memberRepository.save(TEST_MEMBER);
+        ResultActions loginResponse = mockMvc.perform(
+                post("/login")
+                        .param("username", TEST_MEMBER.getEmail())
+                        .param("password", "wrongpassword")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+        );
+        loginResponse.andExpect(status().isOk());
+        HttpSession session = loginResponse.andReturn().getRequest().getSession();
+        assertThat(session).isNotNull();
+        assertThat(session.getAttribute("SPRING_SECURITY_CONTEXT")).isNull();
+}
+
+//    @DisplayName("Basic Auth 인증 성공 후 회원 목록 조회")
+//    @Test
+//    void members() throws Exception {
+//        String token = TEST_MEMBER.getEmail() + ":" + TEST_MEMBER.getPassword();
+//        String encoded = Base64Utils.encodeToString(token.getBytes());
+//        ResultActions loginResponse = mockMvc.perform(get("/members")
+//                .header("Authorization", "Basic " + encoded)
+//                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+//        );
+//        loginResponse.andDo(print());
+//        loginResponse.andExpect(status().isOk());
+//        loginResponse.andExpect(jsonPath("$[*].email", hasItem(TEST_MEMBER.getEmail())));
+//    }
 
 }
