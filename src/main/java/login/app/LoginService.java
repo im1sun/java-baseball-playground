@@ -1,6 +1,5 @@
-package login.domain;
+package login.app;
 
-import login.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +13,10 @@ public class LoginService {
      * @return null 로그인 실패
      */
     public Member login(String email, String password) {
+
         return memberRepository.findByEmail(email)
                 .filter(m -> m.getPassword().equals(password))
                 .orElse(null);
     }
 }
+

@@ -1,8 +1,8 @@
 package study;
 
 import login.LoginServiceApplication;
-import login.domain.Member;
-import login.domain.MemberRepository;
+import login.app.Member;
+import login.app.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +14,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.util.Base64Utils;
 
+import javax.servlet.http.HttpSession;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -56,6 +59,8 @@ public class MemberTest {
         loginResponse.andDo(print());
         loginResponse.andExpect(status().isOk());
         loginResponse.andExpect(jsonPath("$[*].email", hasItem(TEST_MEMBER.getEmail())));
+        HttpSession session = loginResponse.andReturn().getRequest().getSession();
+        assertThat(session.getAttribute("SPRING_SECURITY_CONTEXT")).isEqualTo(TEST_MEMBER);
     }
 
     @DisplayName("Basic Auth 인증 실패 시 에러 응답")
@@ -69,7 +74,9 @@ public class MemberTest {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
         );
         loginResponse.andDo(print());
-        loginResponse.andExpect(status().isUnauthorized());
+        loginResponse.andExpect(status().isOk());
+        HttpSession session = loginResponse.andReturn().getRequest().getSession();
+        assertThat(session.getAttribute("SPRING_SECURITY_CONTEXT")).isNull();
     }
 
 }

@@ -1,4 +1,4 @@
-package login.domain;
+package login.app;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
