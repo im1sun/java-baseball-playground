@@ -3,7 +3,7 @@
 2. LoginTest관련 소스 등록
 3. MemberTest관련 소스 등록
 4. java class 특성에 맞게 파일명 변경
-
+5. 파일명 다시 원복
 
 
 ## [NEXTSTEP 플레이그라운드의 미션 진행 과정](https://github.com/next-step/nextstep-docs/blob/master/playground/README.md)
