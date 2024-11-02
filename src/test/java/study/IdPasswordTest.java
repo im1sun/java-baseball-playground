@@ -1,7 +1,6 @@
 package study;
 
 import login.LoginServiceApplication;
-import login.domain.LoginService;
 import login.domain.Member;
 import login.domain.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.util.Base64Utils;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(classes = LoginServiceApplication.class)
 @AutoConfigureMockMvc
-public class LoginTest {
+public class IdPasswordTest {
 
     @Autowired
     private MockMvc mockMvc;

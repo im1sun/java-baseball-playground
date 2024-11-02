@@ -1,6 +1,5 @@
 package study;
 
-//import com.example.login.LoginServiceApplication;
 import login.LoginServiceApplication;
 import login.domain.Member;
 import login.domain.MemberRepository;
@@ -15,11 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.util.Base64Utils;
 
-import javax.servlet.http.HttpSession;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -27,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(classes = LoginServiceApplication.class)
 @AutoConfigureMockMvc
-public class MemberTest {
+public class BasicAuthTest {
 
     @Autowired
     private MockMvc mockMvc;

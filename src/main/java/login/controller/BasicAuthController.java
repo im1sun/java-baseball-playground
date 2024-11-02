@@ -1,10 +1,8 @@
 package login.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import login.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,22 +17,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import login.domain.Member;
 import login.domain.MemberRepository;
 //import login.domain.MemberService;
 
 @RestController
 @RequestMapping("/members")
-public class MemberController {
+public class BasicAuthController {
 
     @Autowired
     private MemberRepository memberRepository;
-
-//    @Autowired
-//    private MemberService memberService;
-
-//    @Autowired
-//    private AuthenticationManager authenticationManager;
 
     @GetMapping
     public ResponseEntity<List<Member>> getMembers(HttpServletRequest request) {
@@ -68,13 +59,4 @@ public class MemberController {
         }
         return null;
     }
-
-//    private Authentication authenticate(String username, String password) {
-//        try {
-//            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
-//            return authenticationManager.authenticate(authenticationToken);
-//        } catch (Exception e) {
-//            return null;
-//        }
-//    }
 }
