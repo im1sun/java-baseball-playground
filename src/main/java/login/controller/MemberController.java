@@ -22,7 +22,7 @@ import login.domain.MemberRepository;
 
 @RestController
 @RequestMapping("/members")
-public class BasicAuthController {
+public class MemberController {
 
     @Autowired
     private MemberRepository memberRepository;

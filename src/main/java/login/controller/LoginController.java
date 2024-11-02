@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class IdPasswordController {
+public class LoginController {
 
     private final LoginService loginService;
 

@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(classes = LoginServiceApplication.class)
 @AutoConfigureMockMvc
-public class IdPasswordTest {
+public class LoginTest {
 
     @Autowired
     private MockMvc mockMvc;
